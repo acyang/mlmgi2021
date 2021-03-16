@@ -9,7 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 RUN apt-get update --fix-missing && \
-    apt-get install --no-install-recommends -y wget unzip bzip2 ca-certificates curl git apt-utils gnupg pkg-config vim tini && \
+    apt-get install --no-install-recommends -y wget unzip bzip2 ca-certificates curl git apt-utils gnupg pkg-config vim && \
     curl https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc | gpg --dearmor > /tmp/conda.gpg && \
     install -o root -g root -m 644 /tmp/conda.gpg /etc/apt/trusted.gpg.d/ && \
     echo "deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main" > /etc/apt/sources.list.d/conda.list && \
@@ -26,7 +26,12 @@ RUN conda config --add channels conda-forge && \
     sed -i "s/# c.NotebookApp.tornado_settings = {}/c.NotebookApp.tornado_settings = {'headers':{'Content-Security-Policy':\"frame-ancestors http:\/\/*.*.*.* 'self'\"}}/g" /root/.jupyter/jupyter_lab_config.py
 # In jupyter3 config file change to /root/.jupyter/jupyter_lab_config.py
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
+# Add Tini
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+
+ENTRYPOINT ["/tini", "--"]
 
 ENV PATH /opt/conda/envs/mpp/bin:$PATH
 
