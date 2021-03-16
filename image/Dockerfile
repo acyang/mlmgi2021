@@ -1,4 +1,4 @@
-# docker build -t train_base:latest .
+# docker build -t train:latest .
 FROM nvidia/cuda:10.2-runtime-ubuntu16.04
 
 LABEL maintainer "An-Cheng Yang<acyang0903@gmail.com>"
