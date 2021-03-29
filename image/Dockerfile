@@ -1,4 +1,4 @@
-# docker build -t train:latest .
+# docker build -t train:v2 .
 FROM nvidia/cuda:10.2-runtime-ubuntu16.04
 
 LABEL maintainer "An-Cheng Yang<acyang0903@gmail.com>"
@@ -20,7 +20,7 @@ RUN apt-get update --fix-missing && \
 ENV PATH /opt/conda/bin:$PATH
 
 RUN conda config --add channels conda-forge && \
-    conda create -n mpp python=3 pip ipython jupyterlab git matplotlib "nodejs>15" mpich ipyparallel plotly psutil requests ipywidgets pandas seaborn scikit-learn && \
+    conda create -n mpp python=3 pip ipython jupyterlab git matplotlib nodejs mpich ipyparallel plotly psutil requests ipywidgets pandas seaborn scikit-learn tensorflow-gpu==1.15 && \
     conda clean -a -y && \
     /opt/conda/envs/mpp/bin/jupyter-lab --generate-config && \
     sed -i "s/# c.NotebookApp.tornado_settings = {}/c.NotebookApp.tornado_settings = {'headers':{'Content-Security-Policy':\"frame-ancestors http:\/\/*.*.*.* 'self'\"}}/g" /root/.jupyter/jupyter_lab_config.py
