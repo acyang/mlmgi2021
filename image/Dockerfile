@@ -24,4 +24,4 @@ RUN chmod +x /tini
 
 ENTRYPOINT ["/tini", "--"]
 
-CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--ServerApp.token='mgi2021'"]
+CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token='mgi2021'"]
