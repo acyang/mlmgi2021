@@ -11,7 +11,7 @@ RUN apt-get update --fix-missing && \
     gnupg pkg-config vim lammps lammps-doc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install seaborn keras==2.2.4 scikit-image h5py==2.9 ase networkx pygments MDAnalysis pymatgen
+RUN pip install seaborn keras==2.2.4 scikit-image h5py==2.9 ase networkx pygments MDAnalysis pymatgen python-louvain
 
 RUN jupyter-lab --generate-config && \
     sed -i "s/# c.NotebookApp.tornado_settings = {}/c.NotebookApp.tornado_settings = {'headers':{'Content-Security-Policy':\"frame-ancestors http:\/\/*.*.*.* 'self'\"}}/g" /root/.jupyter/jupyter_notebook_config.py
