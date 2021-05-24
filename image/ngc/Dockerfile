@@ -8,7 +8,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update --fix-missing && \
     apt-get install --no-install-recommends -y wget unzip bzip2 ca-certificates curl git apt-utils \
-    gnupg pkg-config vim lammps && \
+    gnupg pkg-config vim lammps lammps-doc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip install seaborn keras==2.2.4 scikit-image h5py==2.9 ase networkx pygments MDAnalysis pymatgen
@@ -23,6 +23,8 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
 WORKDIR /
+
+RUN mkdir /src && git clone https://github.com/lammps/lammps.git
 
 ENTRYPOINT ["/tini", "--"]
 
